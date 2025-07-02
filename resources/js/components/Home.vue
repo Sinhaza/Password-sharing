@@ -1,20 +1,43 @@
 <template>
-    <form @submit.prevent="submitForm">
-        <input v-model="form.password" type="text" placeholder="password" required>
-        <select v-model="form.expires_at">
-            <option v-for="option in timeOptions" :key="option.value" :value="option.value">
-                {{ option.label }}
-            </option>
-        </select>
-        <button type="submit">Submit</button>
-    </form>
+    <div>
+        <div>
+            <form @submit.prevent="submitForm">
+                <h2>Create a Password Link</h2>
 
-    <div v-if="generatedLink">
-        <p>Password created! Here is your link:</p>
-        <a :href="generatedLink" target="_blank">{{ generatedLink }}</a>
-    </div>
-    <div v-if="errorMessage" class="error">
-        {{ errorMessage }}
+                <div>
+                    <label for="password">Password</label>
+                    <input v-model="form.password" id="password" type="text" placeholder="Enter password" required />
+                </div>
+
+                <div>
+                    <label for="expires_at">Expires In</label>
+                    <select v-model="form.expires_at" id="expires_at" required>
+                        <option v-for="option in timeOptions" :key="option.value" :value="option.value">
+                            {{ option.label }}
+                        </option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="visit_limit">Visit Limit</label>
+                    <input v-model.number="form.visit_limit" id="visit_limit" type="number" min="1" step="1"
+                        placeholder="Enter visit limit" required />
+                </div>
+
+                <button type="submit">
+                    Submit
+                </button>
+            </form>
+
+            <div v-if="generatedLink">
+                <p>Password created! Here is your link:</p>
+                <a :href="generatedLink" target="_blank">{{ generatedLink }}</a>
+            </div>
+
+            <div v-if="errorMessage">
+                {{ errorMessage }}
+            </div>
+        </div>
     </div>
 </template>
 
@@ -27,10 +50,12 @@ const errorMessage = ref('')
 
 const form = reactive({
     password: '',
-    expires_at: ''
+    expires_at: '',
+    visit_limit: ''
 })
 
 const timeOptions = [
+    { label: "In 1 minute", value: 1 },
     { label: "In 15 minutes", value: 15 },
     { label: "In 30 minutes", value: 30 },
     { label: "In an hour", value: 60 },
@@ -58,7 +83,8 @@ const submitForm = async () => {
 
         const payload = {
             password: form.password,
-            expires_at: expires_at
+            expires_at: expires_at,
+            visit_limit: form.visit_limit
         };
 
         const response = await axios.post('api/password', payload);

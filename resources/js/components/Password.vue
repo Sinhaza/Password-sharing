@@ -1,11 +1,30 @@
 <template>
     <div>
-        <button @click="revealPassword">Show Password</button>
-        <div v-if="showPassword && password">
-            Password: {{ password }}
-        </div>
-        <div v-if="showPassword && error">
-            {{ error }}
+        <div>
+            <div>
+                <h2>
+                    Reveal Your Password
+                </h2>
+                <button @click="revealPassword">
+                    Show Password
+                </button>
+            </div>
+
+            <div v-if="showPassword && password">
+                <span>Password:</span>
+                <span>{{ password }}</span>
+                <button @click="copyToClipboard()">{{ buttonText }}</button>
+            </div>
+
+            <div v-if="showPassword && error">
+                {{ error }}
+            </div>
+
+            <router-link to="/">
+                <button>
+                    Create a new password
+                </button>
+            </router-link>
         </div>
     </div>
 </template>
@@ -19,6 +38,7 @@ const route = useRoute()
 const password = ref(null)
 const error = ref(null)
 const showPassword = ref(false)
+const buttonText = ref('Copy to clipboard')
 
 onMounted(async () => {
     await getPassword()
@@ -32,8 +52,16 @@ async function getPassword() {
         error.value = null
     } catch (err) {
         password.value = null
-        error.value = err.response?.data?.error || 'The password you are trying to access is either expired or has never existed in the first place'
+        error.value = err.response?.data?.error || 'The password you are trying to access has either expired or has never existed in the first place'
     }
+}
+
+function copyToClipboard() {
+    navigator.clipboard.writeText(password.value)
+    buttonText.value = 'Copied!'
+    setTimeout(() => {
+        buttonText.value = 'Copy to clipboard'
+    }, 1500)
 }
 
 function revealPassword() {
