@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePasswordRequest;
 use App\Models\Password;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\URL;
 
@@ -23,11 +24,7 @@ class PasswordController extends Controller
     public function store(StorePasswordRequest $request)
     {
         $password = Password::create($request->validated());
-        $link = URL::temporarySignedRoute(
-            'password',
-            Carbon::parse($password->expires_at),
-            ['uuid' => $password->uuid]
-        );
+        $link = (env('APP_URL').'/password/'. $password->uuid);
         return response()->json(['message' => 'Password created', 'link' => $link], 201);
     }
 
@@ -36,6 +33,6 @@ class PasswordController extends Controller
      */
     public function show(Password $password)
     {
-        return view('passwords.show', compact('password'));
+        return response()->json($password);
     }
 }

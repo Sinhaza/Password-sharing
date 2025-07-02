@@ -4,7 +4,7 @@ import Password from '../components/Password.vue'
 
 const routes = [
     { path: '/', component: Home },
-    { path: '/password', component: Password }
+    { path: '/password/:uuid', component: Password }
   ]
 
 const router = createRouter({

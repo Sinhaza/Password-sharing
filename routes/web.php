@@ -3,12 +3,11 @@
 use App\Http\Controllers\PasswordController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::get('/{any}', function () {
     return view('app');
-});
+})->where('any', '^(?!api).*$');
 
-Route::post('/password', [PasswordController::class, 'store']);
+Route::post('api/password', [PasswordController::class, 'store']);
 
-Route::get('/password/{uuid}', [PasswordController::class, 'show'])
-    ->middleware('signed')
+Route::get('api/password/{password:uuid}', [PasswordController::class, 'show'])
     ->name('password');
