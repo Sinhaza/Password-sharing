@@ -23,7 +23,7 @@ class StorePasswordRequest extends FormRequest
     {
         return [
             'password' => 'required|max:255',
-            // 'visit_limit' => 'required|integer|min:1',
+            'visit_limit' => 'required|integer|min:1',
             'expires_at' => 'date_format:Y-m-d H:i:s',
         ];
     }
