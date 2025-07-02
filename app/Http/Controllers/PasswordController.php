@@ -22,8 +22,12 @@ class PasswordController extends Controller
     public function store(StorePasswordRequest $request)
     {
         $password = Password::create($request->validated());
-        return redirect()->route('passwords.index')
-                         ->with('success', 'Password created successfully.');
+        $link = URL::temporarySignedRoute(
+            'your.route.name', // Define this route in your web.php
+            now()->addMinutes(60), // Link expires in 60 minutes
+            ['uuid' => $model->uuid]
+        );
+        return response()->json(['message' => 'Password created', 'link' => $link], 201);
     }
 
     /**
