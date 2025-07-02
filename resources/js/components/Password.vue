@@ -4,7 +4,7 @@
         <div v-if="showPassword && password">
             Password: {{ password }}
         </div>
-        <div v-if="error">
+        <div v-if="showPassword && error">
             {{ error }}
         </div>
     </div>
