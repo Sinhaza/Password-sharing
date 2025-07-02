@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->text('password');
-            $table->timestamp('expires_at')->nullable();
+            $table->timestamp('expires_at');
             $table->integer('visit_limit')->default(1);
             $table->integer('visit_count')->default(0);
             $table->timestamps();

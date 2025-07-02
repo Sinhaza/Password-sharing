@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePasswordRequest;
 use App\Models\Password;
-use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\URL;
 
 class PasswordController extends Controller
 {
@@ -23,9 +24,9 @@ class PasswordController extends Controller
     {
         $password = Password::create($request->validated());
         $link = URL::temporarySignedRoute(
-            'your.route.name', // Define this route in your web.php
-            now()->addMinutes(60), // Link expires in 60 minutes
-            ['uuid' => $model->uuid]
+            'password',
+            Carbon::parse($password->expires_at),
+            ['uuid' => $password->uuid]
         );
         return response()->json(['message' => 'Password created', 'link' => $link], 201);
     }

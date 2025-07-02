@@ -5,8 +5,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('app');
-})->where('any', '^(?!api).*$');
+});
 
-Route::get('/password/{model:uuid}', [PasswordController::class, 'show'])
+Route::post('/password', [PasswordController::class, 'store']);
+
+Route::get('/password/{uuid}', [PasswordController::class, 'show'])
     ->middleware('signed')
     ->name('password');
