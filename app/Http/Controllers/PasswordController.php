@@ -37,6 +37,7 @@ class PasswordController extends Controller
         return response()->json($password);
     }
 
+    
     public function incrementVisitCount(Password $password)
     {
         $password->visit_count += 1;
