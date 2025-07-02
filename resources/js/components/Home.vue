@@ -25,6 +25,11 @@ import axios from 'axios'
 const generatedLink = ref('')
 const errorMessage = ref('')
 
+const form = reactive({
+    password: '',
+    expires_at: ''
+})
+
 const timeOptions = [
     { label: "In 15 minutes", value: 15 },
     { label: "In 30 minutes", value: 30 },
@@ -32,10 +37,7 @@ const timeOptions = [
     { label: "In 2 hours", value: 120 }
 ];
 
-const form = reactive({
-    password: '',
-    expires_at: ''
-})
+
 
 
 const submitForm = async () => {

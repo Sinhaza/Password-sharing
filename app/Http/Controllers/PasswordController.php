@@ -33,6 +33,17 @@ class PasswordController extends Controller
      */
     public function show(Password $password)
     {
+        $this->incrementVisitCount($password);
         return response()->json($password);
+    }
+
+    public function incrementVisitCount(Password $password)
+    {
+        $password->visit_count += 1;
+        $password->save();
+
+        if ($password->visit_count >= $password->visit_limit) {
+            $password->delete();
+        }
     }
 }

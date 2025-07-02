@@ -1,14 +1,11 @@
 <template>
-
-    <div>password UUID: {{ $route.params.uuid }}</div>
-
     <div>
         <button @click="getPassword">Get Password</button>
         <div v-if="password">
             Password: {{ password }}
         </div>
         <div v-if="error">
-            Error: {{ error }}
+            {{ error }}
         </div>
     </div>
 
@@ -31,7 +28,7 @@ async function getPassword() {
         error.value = null
     } catch (err) {
         password.value = null
-        error.value = err.response?.data?.error || 'Request failed'
+        error.value = err.response?.data?.error || 'The password you are trying to access is either expired or has never existed in the first place'
     }
 }
 </script>
