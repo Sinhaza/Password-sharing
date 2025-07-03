@@ -1,17 +1,19 @@
 <template>
-    <div>
-        <div>
-            <form @submit.prevent="submitForm">
-                <h2>Create a Password Link</h2>
+    <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8">
+            <form @submit.prevent="submitForm" class="bg-white shadow-lg rounded-lg px-8 py-10 space-y-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 text-center">Create a Password Link</h2>
 
                 <div>
-                    <label for="password">Password</label>
-                    <input v-model="form.password" id="password" type="text" placeholder="Enter password" required />
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input v-model="form.password" id="password" type="text" placeholder="Enter password" required
+                        class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900" />
                 </div>
 
                 <div>
-                    <label for="expires_at">Expires In</label>
-                    <select v-model="form.expires_at" id="expires_at" required>
+                    <label for="expires_at" class="block text-sm font-medium text-gray-700 mb-1">Expires In</label>
+                    <select v-model="form.expires_at" id="expires_at" required
+                        class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white">
                         <option v-for="option in timeOptions" :key="option.value" :value="option.value">
                             {{ option.label }}
                         </option>
@@ -19,22 +21,27 @@
                 </div>
 
                 <div>
-                    <label for="visit_limit">Visit Limit</label>
+                    <label for="visit_limit" class="block text-sm font-medium text-gray-700 mb-1">Visit Limit</label>
                     <input v-model.number="form.visit_limit" id="visit_limit" type="number" min="1" step="1"
-                        placeholder="Enter visit limit" required />
+                        placeholder="Enter visit limit" required
+                        class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900" />
                 </div>
 
-                <button type="submit">
+                <button type="submit"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold transition">
                     Submit
                 </button>
             </form>
 
-            <div v-if="generatedLink">
-                <p>Password created! Here is your link:</p>
-                <a :href="generatedLink" target="_blank">{{ generatedLink }}</a>
+            <div v-if="generatedLink"
+                class="bg-green-50 border border-green-200 text-green-800 rounded-lg p-4 mt-4 text-center">
+                <p class="font-medium mb-2">Password created! Here is your link:</p>
+                <a :href="generatedLink" target="_blank" class="text-blue-700 underline break-all">{{ generatedLink
+                    }}</a>
             </div>
 
-            <div v-if="errorMessage">
+            <div v-if="errorMessage"
+                class="bg-red-50 border border-red-200 text-red-800 rounded-lg p-4 mt-4 text-center">
                 {{ errorMessage }}
             </div>
         </div>
