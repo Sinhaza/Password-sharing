@@ -27,6 +27,7 @@ class Password extends Model
     ];
 
     protected $casts = [
+        'uuid'        => 'string',
         'expires_at'  => 'datetime',
         'visit_limit' => 'integer',
         'visit_count' => 'integer',
