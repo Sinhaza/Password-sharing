@@ -81,12 +81,12 @@ const submitForm = async () => {
 
         const pad = n => String(n).padStart(2, '0');
         const expires_at =
-            futureDate.getFullYear() + '-' +
-            pad(futureDate.getMonth() + 1) + '-' +
-            pad(futureDate.getDate()) + ' ' +
-            pad(futureDate.getHours()) + ':' +
-            pad(futureDate.getMinutes()) + ':' +
-            pad(futureDate.getSeconds());
+            futureDate.getUTCFullYear() + '-' +
+            pad(futureDate.getUTCMonth() + 1) + '-' +
+            pad(futureDate.getUTCDate()) + ' ' +
+            pad(futureDate.getUTCHours()) + ':' +
+            pad(futureDate.getUTCMinutes()) + ':' +
+            pad(futureDate.getUTCSeconds());
 
         const payload = {
             password: form.password,

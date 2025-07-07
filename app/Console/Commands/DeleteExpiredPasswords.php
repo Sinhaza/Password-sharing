@@ -13,10 +13,10 @@ class DeleteExpiredPasswords extends Command
 
     public function handle()
 {
-    $now = \Carbon\Carbon::now('Europe/Amsterdam');
+    $now = Carbon::now();
     $this->info('Current time: ' . $now->toDateTimeString());
 
-    $deleted = \DB::table('passwords')
+    $deleted = DB::table('passwords')
         ->where('expires_at', '<', $now)
         ->delete();
 
